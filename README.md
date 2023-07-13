@@ -3,6 +3,14 @@
 This is the artifact for paper #481 "Synthesizing Specifications". 
 
 
+## System Requirements
+
+* A 64-bit processor and operating system (amd64 machine recommended)
+* Internet connection to download the artifact
+* Memory: 8GB RAM or higher is recommended
+* CPU (cores): CPU with four or more logical cores (3rd Gen Intel Xeon Scalable Ice Lake or better recommended)
+* Secondary Memory: 10GB or higher is recommended
+
 ## Claims
 
 ### Claims supported by this artifact
@@ -31,6 +39,12 @@ This artifact may not support some claims of the paper. Specifically,
 1. The running time and number of SMT calls may be different to Table 1 or Table 2.
 
 2. Each conjunct synthesized by Spyro[Sketch] or Spyro[SMT] may be different to the Fig. 3, while the L-conjunctions are equivalent.
+
+
+#### Reason
+
+All the evaluation data of paper (including Table 1, 2 and Fig. 3) were generated from Apple M1 8-core CPU with 8GB RAM.
+Sketch binary or SMT / SyGuS tools compiled for different architecture / OS may produce different results.
 
 
 ## Setup
@@ -63,8 +77,6 @@ This will generate files containing synthesized properties and CSV files contain
 It also creates files with suffix `_median`, which has median running time among three runs.
 
 `run_benchmarks_median.py` does the same to `run_benchmarks.py`, but only run each benchmark problem with single random seed value, which generated the median value on our local machine. The output file of `run_benchmarks_median.py` will have suffix `_median`. Running `run_benchmarks_median.py` will take about 1 hour. 
-
-We observed that `run_benchmarks_median.py` of Spyro[SMT] may terminate the Docker container with an unknown error. Therefore, we recommend running `run_benchmarks.py` for Spyro[SMT].
 
 Please check `spyro-spyro/README.md` for detail.
 
