@@ -24,4 +24,5 @@ ENV PATH="$PATH:/sketch-1.7.6/sketch-frontend"
 RUN apt-get -y install git
 WORKDIR /
 RUN git clone --recursive https://github.com/ebmoon/oopsla23-artifact.git
+WORKDIR /oopsla23-artifact
 CMD /bin/bash
