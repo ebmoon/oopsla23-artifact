@@ -20,8 +20,62 @@ class Columns(Enum):
     TIME_LIST_ITER = 10
     TIME_TOTAL = 11
 
+def grammarSize():
+    files = [f"spyro-sketch/results/application1_grammar_size.csv"]
+    ret = []
+
+    for filename in files:
+        with open(filename, "r") as f:
+            lines = f.readlines()
+
+        for line in lines:
+            line = line.split(",")
+
+            if len(line) < 1:
+                break
+            
+            ret.append(int(line[1]))
+    
+    return ret
+
+def synthPropertyTime():
+    files = [f"spyro-sketch/results/application1_default_median.csv"]
+    ret = []
+
+    for filename in files:
+        with open(filename, "r") as f:
+            lines = f.readlines()
+
+        for line in lines:
+            line = line.split(",")
+
+            if len(line) < 1:
+                break
+            
+            totalTime = float(line[-1])
+            numConjunct = float(line[1])
+            ret.append(totalTime / numConjunct)
+    
+    return ret
+
 def generateFigureA():
-    pass
+    xs = grammarSize()
+    ys = synthPropertyTime()
+
+    fig, ax = plt.subplots()
+
+    ax.plot(xs[:9], ys[:9], color='red', label='SyGuS', marker='o', linestyle='None')
+    ax.plot(xs[9:34], ys[9:34], color='blue', label='Synquid', marker='x', linestyle='None')
+    ax.plot(xs[34:], ys[34:], color='green', label='Others', marker='*', linestyle='None')
+
+    ax.set_xscale("log")
+    ax.set_yscale("log")
+
+    ax.title.set_text("SynthProperty time vs. Grammar size")
+    ax.legend(loc="lower right")
+    fig.savefig("summary/figure_a.png")
+
+    plt.close(fig)
 
 def logToPlots(filename):
     with open(filename, 'r') as f:
@@ -55,11 +109,13 @@ def generateFigureB():
     xs1, ys1 = logToPlots(files[0])
     xs2, ys2 = logToPlots(files[1])
 
-    plt.plot(xs1, ys1, color='red', label=os.path.basename(files[0]), marker='o', linestyle='None')
-    plt.plot(xs2, ys2, color='blue', label=os.path.basename(files[1]), marker='x', linestyle='None')
+    fig, ax = plt.subplots()
 
-    plt.title("CheckPrecision time vs. Number of examples")
-    plt.savefig("summary/figure_b.png")
+    ax.plot(xs1, ys1, color='red', label=os.path.basename(files[0]), marker='o', linestyle='None')
+    ax.plot(xs2, ys2, color='blue', label=os.path.basename(files[1]), marker='x', linestyle='None')
+
+    ax.title.set_text("CheckPrecision time vs. Number of examples")
+    fig.savefig("summary/figure_b.png")
 
 def generateFigureC():
     pass

@@ -21,8 +21,7 @@ RUN ./autogen.sh
 RUN ./configure
 RUN make
 ENV PATH="$PATH:/sketch-1.7.6/sketch-frontend"
-RUN mkdir -p /spyro
-WORKDIR /spyro
 RUN apt-get -y install git
+WORKDIR /
 RUN git clone --recursive https://github.com/ebmoon/oopsla23-artifact.git
 CMD /bin/bash
