@@ -54,6 +54,48 @@ Sketch binary or SMT / SyGuS tools compiled for different architecture / OS may 
 Requirements of each tool can be checked in `spyro-sketch/README.md` or `spyro-smt/README.md`
 
 
+### Starting with Docker
+
+#### Docker Installation
+
+One can skip this step if Docker is already installed.
+Use the following instructions to install Docker in Ubuntu. 
+
+`sudo apt-get install docker`
+
+Installation of docker can be verified by the command
+
+`docker run hello-world`
+
+
+#### Image Download
+
+* Option 1: Download Docker image from Zenodo
+
+Download the tar file containing docker image from the Zenodo.
+The following command loads the image.
+
+`docker load < spyro_oopsla23.tar.gz`
+
+* Option 2: Docker pull from the Docker hub
+
+The following command pulls our docker image from the Docker hub.
+
+`docker pull ebmoon/spyro_oopsla23`
+
+
+#### Running Docker
+
+Start docker using the following command:
+
+```
+mkdir summary
+docker run -it -v $(pwd)/summary:/oopsla23-artifact/summary ebmoon/spyro_oopsla23
+```
+
+This will use the directory `summary` to store figures and summary text generated from the container.
+
+
 ## Structure of this artifact
 
 * `dafnyProofs` contains Dafny proof files for synthesized properties of Spyro[Sketch] problems.
@@ -87,7 +129,7 @@ Command `python3 run_benchmarks.py -a` in `spyro-sketch` directory will run Spyr
 This will generate files containing synthesized properties and CSV files containing statistics in the `results` directory. For example, `application1_default_32.csv` contains statistics for Application 1 with seed 32, and `application3_nofreeze_128.csv` contains statistics for Application 3 with seed 128, executed without freezing negative examples.
 It also creates files with suffix `_median`, which has median running time among three runs.
 
-`run_benchmarks_median.py` does the same to `run_benchmarks.py`, but only run each benchmark problem with single random seed value, which generated the median value on our local machine. The output file of `run_benchmarks_median.py` will have suffix `_median`. Running `python run_benchmarks_median.py -a` will take less than 20 hours. 
+`run_benchmarks_median.py` does the same to `run_benchmarks.py`, but only run each benchmark problem with single random seed value, which generated the median value on our local machine. The output file of `run_benchmarks_median.py` will have suffix `_median`. Running `python3 run_benchmarks_median.py -a` will take less than 20 hours. 
 
 Please check `spyro-sketch/README.md` for detail.
 
