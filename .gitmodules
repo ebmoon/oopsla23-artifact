@@ -1,7 +1,9 @@
 [submodule "spyro"]
 	path = spyro-sketch
 	url = https://github.com/ebmoon/spyro.git
+    branch = oopsla23
 
 [submodule "spyro-sygus"]
 	path = spyro-smt
 	url = https://github.com/ebmoon/spyro-sygus.git
+    branch = oopsla23-artifact
