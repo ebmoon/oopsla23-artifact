@@ -46,7 +46,7 @@ def synthPropertyTime():
         with open(filename, "r") as f:
             lines = f.readlines()
 
-        for line in lines:
+        for line in lines[1:]:
             line = line.split(",")
 
             if len(line) < 1:
@@ -71,7 +71,9 @@ def generateFigureA():
     ax.set_xscale("log")
     ax.set_yscale("log")
 
-    ax.title.set_text("SynthProperty time vs. Grammar size")
+    ax.set_title("SynthProperty time vs. Grammar size")
+    ax.set_xlabel("Grammar size")
+    ax.set_ylabel("SynthProperty")
     ax.legend(loc="lower right")
     fig.savefig("summary/figure_a.png")
 
@@ -114,11 +116,65 @@ def generateFigureB():
     ax.plot(xs1, ys1, color='red', label=os.path.basename(files[0]), marker='o', linestyle='None')
     ax.plot(xs2, ys2, color='blue', label=os.path.basename(files[1]), marker='x', linestyle='None')
 
-    ax.title.set_text("CheckPrecision time vs. Number of examples")
+    ax.set_title("CheckPrecision time vs. Number of examples")
+    ax.set_xlabel("# examples")
+    ax.set_ylabel("CheckPrecision")
+
     fig.savefig("summary/figure_b.png")
 
 def generateFigureC():
-    pass
+    files = [
+        "spyro-smt/results/smt",
+        "spyro-sketch/results/application1",
+        "spyro-sketch/results/application2",
+        "spyro-sketch/results/application3",
+        "spyro-sketch/results/application4"
+    ]
+
+    defaults = []
+    for filename in files:
+        path = f"{filename}_default_median.csv"
+
+        with open(path, "r") as f:
+            lines = f.readlines()
+        
+        for line in lines[1:]:
+            line = line.split(',')
+
+            if len(line) < 1:
+                break
+        
+            defaults.append(float(line[-1]))
+
+    nofreezes = []
+    for filename in files:
+        path = f"{filename}_nofreeze_median.csv"
+
+        with open(path, "r") as f:
+            lines = f.readlines()
+        
+        for line in lines[1:]:
+            line = line.split(',')
+
+            if len(line) < 1:
+                break
+        
+            nofreezes.append(float(line[-1]))
+
+    fig, ax = plt.subplots()
+
+    top = max(nofreezes + defaults)
+
+    ax.plot(nofreezes, defaults, color='black', marker='o', linestyle='None')
+    ax.plot([1, top], [1, top], color='blue')
+
+    ax.set_xscale("log")
+    ax.set_yscale("log")
+
+    ax.set_title("With line 12 vs. Without line 12")
+    ax.set_xlabel("Without line 12")
+    ax.set_ylabel("With line 12")
+    fig.savefig("summary/figure_c.png")
 
 def generateSummary():
     pass
