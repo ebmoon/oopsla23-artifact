@@ -81,7 +81,7 @@ The following command loads the image.
 
 The following command pulls our docker image from the Docker hub.
 
-`docker pull ebmoon/spyro_oopsla23`
+`docker pull kangheep/spyro_oopsla23`
 
 
 #### Running Docker
@@ -90,7 +90,7 @@ Start docker using the following command:
 
 ```
 mkdir summary
-docker run -it -v $(pwd)/summary:/oopsla23-artifact/summary ebmoon/spyro_oopsla23
+docker run -it -v $(pwd)/summary:/oopsla23-artifact/summary kangheep/spyro_oopsla23
 ```
 
 This will use the directory `summary` to store figures and summary text generated from the container.
