@@ -7,18 +7,18 @@ import matplotlib.pyplot as plt
 import argparse
 from enum import Enum
 
-class Columns(Enum):
-    BENCHMARK_NAME = 1
-    NUM_CONJUNCT = 2
-    NUM_SYNTH_CALL = 3
-    TIME_SYNTH_CALL = 4
-    NUM_SOUNDNESS_CALL = 5
-    TIME_SOUNDNESS_CALL = 6
-    NUM_PRECISION_CALL = 7
-    TIME_PRECISION_CALL = 8
-    TIME_LAST_CALL = 9
-    TIME_LIST_ITER = 10
-    TIME_TOTAL = 11
+class Columns():
+    BENCHMARK_NAME = 0
+    NUM_CONJUNCT = 1
+    NUM_SYNTH_CALL = 2
+    TIME_SYNTH_CALL = 3
+    NUM_SOUNDNESS_CALL = 4
+    TIME_SOUNDNESS_CALL = 5
+    NUM_PRECISION_CALL = 6
+    TIME_PRECISION_CALL = 7
+    TIME_LAST_CALL = 8
+    TIME_LIST_ITER = 9
+    TIME_TOTAL = 10
 
 def grammarSize():
     files = [f"spyro-sketch/results/application1_grammar_size.csv"]
@@ -52,8 +52,8 @@ def synthPropertyTime():
             if len(line) < 1:
                 break
             
-            totalTime = float(line[-1])
-            numConjunct = float(line[1])
+            totalTime = float(line[Columns.TIME_TOTAL])
+            numConjunct = float(line[Columns.NUM_CONJUNCT])
             ret.append(totalTime / numConjunct)
     
     return ret
@@ -144,7 +144,7 @@ def generateFigureC():
             if len(line) < 1:
                 break
         
-            defaults.append(float(line[-1]))
+            defaults.append(float(line[Columns.TIME_TOTAL]))
 
     nofreezes = []
     for filename in files:
@@ -159,7 +159,7 @@ def generateFigureC():
             if len(line) < 1:
                 break
         
-            nofreezes.append(float(line[-1]))
+            nofreezes.append(float(line[Columns.TIME_TOTAL]))
 
     fig, ax = plt.subplots()
 
@@ -177,7 +177,79 @@ def generateFigureC():
     fig.savefig("summary/figure_c.png")
 
 def generateSummary():
-    pass
+    files = [
+        "spyro-smt/results/smt",
+        "spyro-sketch/results/application1",
+        "spyro-sketch/results/application2",
+        "spyro-sketch/results/application3",
+        "spyro-sketch/results/application4"
+    ]
+
+    summary = open("summary/summary.txt", "w")
+
+    synth = []
+    soundness = []
+    precision = []
+    total = []
+    last_call = []
+    last_iter = []
+    nofreezes = []
+
+    defaults = []
+    for filename in files:
+        path = f"{filename}_default_median.csv"
+
+        with open(path, "r") as f:
+            lines = f.readlines()
+        
+        for line in lines[1:]:
+            line = line.split(',')
+
+            if len(line) < 1:
+                break
+        
+            synth.append(float(line[Columns.TIME_SYNTH_CALL]))
+            soundness.append(float(line[Columns.TIME_SOUNDNESS_CALL]))
+            precision.append(float(line[Columns.TIME_PRECISION_CALL]))
+            last_call.append(float(line[Columns.TIME_LAST_CALL]))
+            last_iter.append(float(line[Columns.TIME_LAST_CALL]))
+            total.append(float(line[Columns.TIME_TOTAL]))    
+
+    for filename in files:
+        path = f"{filename}_nofreeze_median.csv"
+
+        with open(path, "r") as f:
+            lines = f.readlines()
+        
+        for line in lines[1:]:
+            line = line.split(',')
+
+            if len(line) < 1:
+                break
+        
+            nofreezes.append(float(line[Columns.TIME_TOTAL]))
+
+    num_benchmarks = len(total)
+    
+    synth_ratio = statistics.geometric_mean([synth[n] / total[n] for n in range(num_benchmarks)])
+    summary.write(f"Geometric mean of Synthesis / Total: {synth_ratio}\n")
+
+    sound_ratio = statistics.geometric_mean([soundness[n] / total[n] for n in range(num_benchmarks)])
+    summary.write(f"Geometric mean of CheckSoundness / Total: {sound_ratio}\n")
+
+    prec_ratio = statistics.geometric_mean([precision[n] / total[n] for n in range(num_benchmarks)])
+    summary.write(f"Geometric mean of CheckSoundness / Total: {prec_ratio}\n")
+
+    lc_ratio = statistics.geometric_mean([last_call[n] / total[n] for n in range(num_benchmarks)])
+    summary.write(f"Geometric mean of Last call / Total: {lc_ratio}\n")
+
+    li_ratio = statistics.geometric_mean([last_iter[n] / total[n] for n in range(num_benchmarks)])
+    summary.write(f"Geometric mean of Last iteration / Total: {li_ratio}\n")
+
+    speedup = statistics.geometric_mean([nofreezes[n] / total[n] for n in range(num_benchmarks)])
+    summary.write(f"Geometric mean of speedup by line 12: {speedup}\n")
+
+    summary.close()
 
 def main():
     parser = argparse.ArgumentParser()
