@@ -1,0 +1,7 @@
+[submodule "spyro"]
+	path = spyro-sketch
+	url = https://github.com/ebmoon/spyro.git
+
+[submodule "spyro-sygus"]
+	path = spyro-smt
+	url = https://github.com/ebmoon/spyro-sygus.git

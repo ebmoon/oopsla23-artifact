@@ -1,0 +1,4 @@
+dafnyProofs/*/*.dll
+dafnyProofs/*/*.json
+summary/
+.DS_Store
