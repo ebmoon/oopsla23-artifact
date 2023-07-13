@@ -1,9 +1,11 @@
+FROM ubuntu:22.04
 RUN apt-get update
 RUN apt-get -y install flex bison
 RUN apt-get -y install default-jdk
 RUN apt-get -y install python3 python3-pip
 RUN apt-get -y install wget autoconf libtool
 RUN apt-get -y install dotnet-sdk-6.0
+RUN apt-get -y install unzip
 RUN pip install --upgrade pip
 RUN pip install z3-solver
 RUN pip install cvc5
@@ -22,10 +24,5 @@ ENV PATH="$PATH:/sketch-1.7.6/sketch-frontend"
 RUN mkdir -p /spyro
 WORKDIR /spyro
 RUN apt-get -y install git
-RUN git clone https://github.com/ebmoon/spyro.git
-RUN git clone https://github.com/ebmoon/spyro-sygus.git
-WORKDIR /spyro/spyro
-RUN git checkout oopsla23
-WORKDIR /spyro/spyro-sygus
-RUN git checkout oopsla23-artifact
+RUN git clone --recursive https://github.com/ebmoon/oopsla23-artifact.git
 CMD /bin/bash
