@@ -5,7 +5,7 @@ This is the artifact for paper #481 "Synthesizing Specifications".
 
 ## System Requirements
 
-* A 64-bit processor and operating system (amd64 machine recommended)
+* A 64-bit processor and operating system (linux/amd64 recommended)
 * Internet connection to download the artifact
 * Memory: 8GB RAM or higher is recommended
 * CPU (cores): CPU with four or more logical cores (3rd Gen Intel Xeon Scalable Ice Lake or better recommended)
@@ -45,7 +45,7 @@ This artifact may not support some claims of the paper. Specifically,
 
 All the evaluation data of paper (including Table 1, 2 and Fig. 3) were generated from Apple M1 8-core CPU with 8GB RAM.
 Sketch binary or SMT / SyGuS tools compiled for different architecture / OS may produce different results.
-
+Spyro[SMT] and Spyro[Sketch] has a high variance in running time. To obtain reliable results, it is recommended to execute it with a minimum of three random seeds.
 
 ## Setup
 
@@ -83,6 +83,9 @@ The following command pulls our docker image from the Docker hub.
 
 `docker pull kangheep/spyro_oopsla23`
 
+If the above command does not work, please try
+
+`docker pull kangheep/spyro_oopsla23:latest`
 
 #### Running Docker
 
@@ -90,11 +93,11 @@ Start docker using the following command:
 
 ```
 mkdir summary
-docker run -it -v $(pwd)/summary:/oopsla23-artifact/summary kangheep/spyro_oopsla23
+docker run -it -v "$(pwd)/summary:/oopsla23-artifact/summary" kangheep/spyro_oopsla23
 ```
 
 This will use the directory `summary` to store figures and summary text generated from the container.
-
+This Docker command will drop you into a container shell with all the requirements set up. It does not automatically run any tests. Please follow the steps below to perform each test.
 
 ## Structure of this artifact
 
