@@ -98,7 +98,7 @@ function Forall_ge(t:Tree, v:int): bool
     case Branch(x, t1, t2) => x >= v && Forall_ge(t1, v) && Forall_ge(t2, v)
 }
 
-function method BranchTree(v:int, t1:Tree, t2:Tree): (tout: Tree)
+function BranchTree(v:int, t1:Tree, t2:Tree): (tout: Tree)
     ensures Size(tout) == Size(t1) + Size(t2) + 1
     ensures Exists_eq(tout, v)
     ensures Exists_lt(t1, v) ==> Exists_lt(tout, v)
@@ -112,7 +112,7 @@ function method BranchTree(v:int, t1:Tree, t2:Tree): (tout: Tree)
     Branch(v, t1, t2)
 }
 
-function method RootVal(t:Tree): (v:int)
+function RootVal(t:Tree): (v:int)
     requires !isEmpty(t)
 {
     match t

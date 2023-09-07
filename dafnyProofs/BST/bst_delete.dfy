@@ -129,7 +129,7 @@ function Delete(t:Tree, v:int): (tout: Tree)
     ensures Forall_ge(t, v) || Exists_lt(tout, v)
     ensures Forall_le(t, v) || Exists_gt(tout, v)
     ensures Forall_neq(t, v) ==> t == tout
-    ensures Forall_le(t, v) ==> Forall_lt(tout, v)
+    ensures Exists_gt(t, v) || Forall_lt(tout, v)
     ensures Forall_ge(t, v) ==> Forall_gt(tout, v)
     ensures Forall_neq(tout, v)
 {

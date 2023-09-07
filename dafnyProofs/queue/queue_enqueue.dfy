@@ -10,7 +10,7 @@ function ListLen(l:List): (v: int)
   case Cons(hd, tl) => ListLen(tl) + 1
 }
 
-function method isEmptyList(l:List): bool
+function isEmptyList(l:List): bool
 {
     match l
     case Nil => true
@@ -52,7 +52,7 @@ function Forall_ge(l:List, x:int): bool
   case Cons(hd, tl) => hd >= x || Forall_ge(tl, x)
 }
 
-function method Snoc(l:List, x:int): (lout: List)
+function Snoc(l:List, x:int): (lout: List)
   ensures ListLen(lout) == ListLen(l) + 1
   ensures Exists_eq(lout, x)
   ensures Forall_ge(l, x) || Exists_lt(lout, x)
@@ -66,7 +66,7 @@ function method Snoc(l:List, x:int): (lout: List)
 }
 
 
-function method Reverse(l:List): (lout:List)
+function Reverse(l:List): (lout:List)
   ensures ListLen(l) == ListLen(lout)
   ensures ListLen(l) > 1 || l == lout
 {
@@ -106,7 +106,7 @@ function toList(q:Queue): (l:List)
     Append(outList, Reverse(inList))
 }
 
-function method Enqueue(q:Queue, v:int): (qout: Queue)
+function Enqueue(q:Queue, v:int): (qout: Queue)
   requires Valid(q)
   ensures Valid(qout)
   ensures toList(qout) == Snoc(toList(q), v)

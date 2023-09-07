@@ -77,10 +77,10 @@ method Reverse(l:List) returns (lout: List)
 }
 
 method Reverse_twice(l1:List, l2:List) returns (lout1:List, lout2:List)
-  ensures l2 == lout1 ==> l1 == lout2;
-  ensures l1 == lout2 ==> l2 == lout1;
-  ensures lout1 == lout2 ==> l1 == l2;
-  ensures l1 == l2 ==> lout1 == lout2;
+  ensures l2 == lout1 ==> l1 == lout2
+  ensures l1 == lout2 ==> l2 == lout1
+  ensures lout1 == lout2 ==> l1 == l2
+  ensures l1 == l2 ==> lout1 == lout2
 {
   lout1 := Reverse(l1);
   lout2 := Reverse(l2);

@@ -28,31 +28,32 @@ function isEmptyStack(st:Stack): bool
   case SList(l) => isEmptyList(l)
 }
 
-function method Push(st:Stack, v:int): (stout: Stack)
+function Push(st:Stack, v:int): (stout: Stack)
   ensures StackLen(stout) == StackLen(st) + 1
 {
   match st
   case SList(l) => SList(Cons(v, l))
 }
 
-method Pop(st:Stack) returns (stout: Stack, v:int)
+function Pop(st:Stack) : (out: (Stack, int))
   requires !isEmptyStack(st)
-  ensures StackLen(st) == StackLen(stout) + 1
+  ensures StackLen(st) == StackLen(out.0) + 1
 {
   match st
   case SList(l) => 
     match l {
-      case Nil => stout := SList(Nil); v := 0;
-      case Cons(hd, tl) => stout := SList(tl); v := hd;
+      case Nil => (SList(Nil), 0)
+      case Cons(hd, tl) => (SList(tl), hd)
     }
 }
 
-method push_pop(st1: Stack, x1: int, st2: Stack) returns (stout1: Stack, stout2:Stack, x2: int)
+method push_pop(st1: Stack, x: int, st2: Stack) returns (stout1: Stack, stout2:Stack, xout: int)
   requires !isEmptyStack(st2)
-  ensures stout1 == st2 ==> x1 == x2
+  ensures stout1 == st2 ==> x == xout
   ensures stout1 == st2 ==> st1 == stout2
-  ensures stout2 == st1 && x1 == x2 ==> stout1 == st2
+  ensures stout2 == st1 && x == xout ==> stout1 == st2
 {
-  stout1 := Push(st1, x1);
-  stout2, x2 := Pop(st2);
+  stout1 := Push(st1, x);
+  match Pop(st2)
+    case (st, v) => stout2 := st; xout := v;
 }
