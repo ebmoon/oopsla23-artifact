@@ -27,7 +27,7 @@ The artifact supports the following claims:
  for 35/35 benchmark problems, and guarantee 34/35 are best L-conjunction.
 
 2. Quantitative analysis Part 2: Soundness
-    * Dafny successfully verified that 33/35 L-conjunctions synthesized by spyro[sketch] on non-SyGuS benchmarks.
+    * Dafny successfully verified that 33/35 L-conjunctions synthesized by spyro[Sketch] on non-SyGuS benchmarks.
 
 3. The Algorithm 1 with line 12 is faster than the Algorithm 1 without line 12.
 
@@ -123,7 +123,7 @@ It also creates files with suffix `_median`, which has median running time among
 
 `run_benchmarks_median.py` does the same to `run_benchmarks.py`, but only run each benchmark problem with single random seed value, which generated the median value on our local machine. The output file of `run_benchmarks_median.py` will have suffix `_median`. Running `run_benchmarks_median.py` will take about 1 hour. 
 
-Please check `spyro-spyro/README.md` for detail.
+Please check `spyro-smt/README.md` for detail.
 
 ### Running Spyro[Sketch] benchmarks
 

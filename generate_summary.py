@@ -238,7 +238,7 @@ def generateSummary():
     summary.write(f"Geometric mean of CheckSoundness / Total: {sound_ratio}\n")
 
     prec_ratio = statistics.geometric_mean([precision[n] / total[n] for n in range(num_benchmarks)])
-    summary.write(f"Geometric mean of CheckSoundness / Total: {prec_ratio}\n")
+    summary.write(f"Geometric mean of CheckPrecision / Total: {prec_ratio}\n")
 
     lc_ratio = statistics.geometric_mean([last_call[n] / total[n] for n in range(num_benchmarks)])
     summary.write(f"Geometric mean of Last call / Total: {lc_ratio}\n")
