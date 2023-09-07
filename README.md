@@ -141,10 +141,15 @@ Please check `spyro-sketch/README.md` for detail.
 The Dafny binary is installed at the path `/dafny` in the docker image.
 Each Dafny proof can be verified using the command `/dafny/dafny <path-to-proof-file>`.
 Every proof except `dafnyProofs/list/reverse_twice.dfy` and `dafnyProofs/queue/enqueue.dfy` should succeed.
+(Running Dafny with those two files will terminate with errors)
 
 ## Generating Summary
 
-Running `python3 generate_summary.py --all` will generate figures and summary text from execution results.
+
+Running `python3 grammar_size_calculator.py -a` in the `spyro-sketch` directory will generate `application1_grammar_size.csv` file in `spyro-sketch/results`, 
+which is required to generate figures.
+
+Running `python3 generate_summary.py --all` in the `oopsla23-artifact` directory will generate figures and summary text from execution results.
 You can generate only certain figure or summary text using `--figureA`, `--figureB`, `--figureC` or `--summary`.
 Generated files will be stored in `summary` directory. 
 
